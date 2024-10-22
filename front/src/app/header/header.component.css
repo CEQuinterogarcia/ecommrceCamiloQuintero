@@ -1,0 +1,28 @@
+.header{
+    width: 90vw;
+    border: 5px;
+    border-color: blue;
+    border-style:solid;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin: 0 auto;
+    margin-top: 50px;
+    
+}
+.logo {
+    height: inherit;
+    width: auto;
+    margin: 0 2rem;
+   
+    padding: 5px;
+    
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-right: 16px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}

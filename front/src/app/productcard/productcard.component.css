@@ -1,0 +1,28 @@
+.product-card {
+    height: 100%;
+    margin: 3px;
+  }
+  .product-image {
+    margin: 0 auto;
+    width: 200px; /* Ajusta el ancho según tus necesidades */
+    height: 200px; /* Ajusta la altura según tus necesidades */
+    object-fit: cover; /* Esto asegurará que la imagen se recorte para llenar el área definida */
+  }
+  mat-card-actions{
+    margin-top: auto;
+  }
+  button{
+    margin: 0;
+    height: 30px;
+    border-color: aliceblue;
+    background-color: rgb(64, 86, 255);
+    color: white;
+    &:hover{
+     color: rgb(255, 0, 0);
+    };
+     
+  }
+  .product-price{
+    font-size: 2rem;
+    
+  }

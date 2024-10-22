@@ -1,0 +1,61 @@
+<div>
+  <app-header/>
+</div> 
+<div class="formProduct">
+
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="name">Nombre del Producto</label>
+      <input id="name" formControlName="name">
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        El nombre es requerido.
+      </div>
+    </div>
+  
+    <div>
+      <label for="description">Descripción</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched">
+        La descripción es requerida.
+      </div>
+    </div>
+  
+    <div>
+      <label for="price">Precio</label>
+      <input id="price" type="number" formControlName="price">
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+        El precio debe ser un número positivo.
+      </div>
+    </div>
+  
+    <div>
+      <label for="stock">Cantidad</label>
+      <input id="stock" type="number" formControlName="stock">
+      <div *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched">
+        La cantidad debe ser al menos 1.
+      </div>
+    </div>
+
+    <div>
+        <label for="categoryId">Categoria</label>
+        <input id="categoryId" type="number" formControlName="categoryId">
+        <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched">
+          
+        </div>
+    </div>
+
+    <div>
+        <label for="image">imagen</label>
+        <input id="image" formControlName="image">
+        <div *ngIf="productForm.get('image')?.invalid && productForm.get('image')?.touched">
+          El nombre es requerido.
+        </div>
+    </div>
+    
+  
+    <button type="submit" [disabled]="productForm.invalid">Agregar Producto</button>
+  </form>
+
+
+</div>

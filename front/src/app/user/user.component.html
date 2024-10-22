@@ -1,0 +1,18 @@
+<section>
+    @if (login) {
+        <p>bienvenido  {{username}}</p>
+        <img 
+        (click)="clic()"
+        src="https://github.com/CEQuinterogarcia.png" 
+        alt="foto"/>
+    }@else {
+        <p>Iniciar sesion por favor</p>
+        <button (click)="login = true">login in</button>
+    }
+    <app-product/>
+</section>
+
+
+
+
+

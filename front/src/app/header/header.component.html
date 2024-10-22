@@ -1,0 +1,20 @@
+<div class="header">
+
+    <mat-toolbar color="primary">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Categoria 1</button>
+        <button mat-menu-item>Categoria 2</button>
+        <button mat-menu-item>Categoria 3</button>
+        <button mat-menu-item>Categoria 4</button>
+      </mat-menu>
+        <button mat-mini-fab [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+        <div></div>
+        <img src="/assets/logo.jpg" alt="Descripción de la imagen" class="logo">
+        <div class="spacer"></div>
+        <button mat-flat-button routerLink="/home"  (click)="navigateHome()">Home</button>
+        <button mat-flat-button routerLink="/productform" (click)="navigateToAddProduct()">Crear Producto</button>
+        <button mat-flat-button routerLink="/cart" (click)="navigatecart()">Carrito</button>
+        <button mat-flat-button routerLink="/contact">Contact</button>
+        <button mat-flat-button routerLink="/detail" (click)="navigateDetail()">Detail</button>
+    </mat-toolbar>
+</div>

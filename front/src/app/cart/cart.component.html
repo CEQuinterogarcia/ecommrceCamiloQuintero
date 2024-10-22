@@ -1,0 +1,26 @@
+<div>
+  <app-header></app-header>
+<div class="carrito">
+  <h2>Carrito de Compras</h2>
+
+  <!-- Mostrar mensaje si el carrito está vacío -->
+  <div *ngIf="items.length === 0">
+    <p>El carrito está vacío.</p>
+  </div>
+
+  <!-- Mostrar los artículos si el carrito tiene productos -->
+  <ul *ngIf="items.length > 0">
+    <li *ngFor="let item of items">
+      {{ item.name }} - {{ item.price | currency }} x {{ item.quantity }}
+      <button (click)="removeItem(item.id)">Eliminar</button>
+    </li>
+  </ul>
+
+  <!-- Mostrar el total -->
+  <p>Total: {{ total | currency }}</p>
+
+  <!-- Botón para vaciar el carrito -->
+  <button (click)="clearCart()">Vaciar Carrito</button>
+  <button (click)="placeOrder(1)">Cargar Pedido</button>
+</div>
+</div>

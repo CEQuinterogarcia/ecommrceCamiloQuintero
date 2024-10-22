@@ -1,0 +1,17 @@
+.product-list {
+  width: 95vw;
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr); /* Cuatro columnas de igual ancho */
+  gap: 10px; /* Espacio entre los elementos */
+  padding: 2vw;
+}
+  .product {
+    width: 95vw;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 10px;
+    border-color: aqua;
+    border-style: inset;
+  }
+  
