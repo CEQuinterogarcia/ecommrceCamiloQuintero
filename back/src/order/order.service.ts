@@ -50,29 +50,34 @@ export class OrderService {
     return await this.ordersRepository.find({ where: { user: { id: userId } }, relations: ['items', 'items.product'] });
   }
 
+  async getOrdersId(orderId: number): Promise<Order> {
+    return await this.ordersRepository.findOne({
+      where: { id: orderId },
+      relations: ['items', 'items.product']
+    });
+  }  
 
 
-  async exportOrdersToPdf(userId: number): Promise<Buffer> {
-    const orders = await this.getOrders(userId);
-
-   // Definir fuentes correctamente
-  const fonts = {
-    Roboto: {
-      normal: '../../fonts/Roboto-Regular.ttf',
-      bold: '../../fonts/Roboto-Bold.ttf',
-      italics: '../../fonts/Roboto-Italic.ttf',
-      bolditalics: '../..//fonts/Roboto-BoldItalic.ttf',
-    },
-  };
-
-  const printer = new PdfPrinter(fonts);
-
-  // Estructura del contenido del PDF
-  const docDefinition = {
-    content: [
-      { text: 'Listado de Pedidos', style: 'header' },
-      ...orders.flatMap((order) => [
-        { text: `Usuario: ${order.id}`, style: 'subheader', margin: [0, 10, 0, 15] },
+  async exportOrdersToPdf(orderId: number): Promise<Buffer> {
+    const order = await this.getOrdersId(orderId); // Obtener un solo pedido
+  
+    // Definir fuentes correctamente
+    const fonts = {
+      Roboto: {
+        normal: '../../fonts/Roboto-Regular.ttf',
+        bold: '../../fonts/Roboto-Bold.ttf',
+        italics: '../../fonts/Roboto-Italic.ttf',
+        bolditalics: '../../fonts/Roboto-BoldItalic.ttf',
+      },
+    };
+  
+    const printer = new PdfPrinter(fonts);
+  
+    // Estructura del contenido del PDF
+    const docDefinition = {
+      content: [
+        { text: 'Listado de Pedidos', style: 'header' },
+        { text: `Código Pedido: ${order.id}`, style: 'subheader', margin: [0, 10, 0, 15] },
         {
           style: 'subheader',
           margin: [0, 10, 0, 5],
@@ -91,36 +96,37 @@ export class OrderService {
           },
         },
         { text: `Total: $${order.total_amount}`, style: 'subheader', margin: [0, 10, 0, 15] }, // Agregar el total al final
-      ]),
-    ],
-    styles: {
-      header: {
-        fontSize: 18,
-        bold: true,
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+        },
+        subheader: {
+          fontSize: 14,
+          bold: true,
+        },
       },
-      subheader: {
-        fontSize: 14,
-        bold: true,
-      },
-    },
-  };
-  // Crear el documento PDF
-  const pdfDoc = printer.createPdfKitDocument(docDefinition);
-
-  const chunks = [];
-  pdfDoc.on('data', (chunk) => {
-    chunks.push(chunk);
-  });
-
-  return new Promise((resolve) => {
-    pdfDoc.on('end', () => {
-      const result = Buffer.concat(chunks);
-      resolve(result);
+    };
+  
+    // Crear el documento PDF
+    const pdfDoc = printer.createPdfKitDocument(docDefinition);
+    const chunks: Buffer[] = [];
+  
+    return new Promise((resolve, reject) => {
+      pdfDoc.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+      pdfDoc.on('end', () => {
+        const result = Buffer.concat(chunks);
+        resolve(result);
+      });
+      pdfDoc.on('error', (err) => {
+        reject(err);
+      });
+      pdfDoc.end();
     });
-    pdfDoc.end();
-  });
   }
-
 
 
 

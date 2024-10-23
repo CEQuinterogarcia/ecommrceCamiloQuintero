@@ -1,32 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderService } from './order.service'; // Asegúrate de que la ruta es correcta
-import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { OrderService } from './order.service'; // Ajusta la ruta según tu estructura
+import { HeaderComponent } from '../header/header.component';
+
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './order.component.html',
-  styleUrl: './order.component.css'
+  styleUrls: ['./order.component.css'],
+
 })
 export class OrderComponent implements OnInit {
-  pedidos: any[] = [];
-  userId: number = 1;
+  orders: any[] = [];
+  userId: number = 2; // Reemplaza esto con el ID del usuario real
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService) {}
 
-  ngOnInit(): void {
-    this.fetchProducts();
+  ngOnInit() {
+    this.orderService.getOrder(this.userId).subscribe((data: any[]) => {
+      this.orders = data;
+      console.log(this.orders);
+
+    });
   }
 
-  fetchProducts(): void {
-    this.orderService.getProducts(this.userId).subscribe(
-      (data) => {
-        this.pedidos = data; // Guarda los productos en el arreglo
-        console.log('Productos obtenidos:', this.pedidos);
+  printOrder(orderId: number) {
+    console.log(orderId);
+    this.orderService.expoOrder(orderId).subscribe(
+      (response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `order_${orderId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        console.log('Export successful:', response);
       },
       (error) => {
-        console.error('Error al obtener productos:', error); // Manejo de errores
+        console.error('Export failed:', error);
+        console.error('Error details:', error.error); // Imprime los detalles del error
       }
     );
   }
+
 }

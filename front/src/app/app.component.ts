@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';  // Importa FormsModule
+
+import { LoginComponent } from './login/login.component';
+
 import { RouterOutlet } from '@angular/router';
 import { UserComponent } from './user/user.component';
 import { ProductComponent } from './product/product.component';
@@ -26,7 +33,7 @@ import { CartComponent } from './cart/cart.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CartComponent,CloudinaryModule, RouterOutlet, UserComponent, ProductComponent, HeaderComponent, ReactiveFormsModule, HttpClientModule, MatCardModule, ProductcardComponent, HomeComponent, ProductFormComponent ],
+  imports: [BrowserModule, FormsModule,CartComponent,CloudinaryModule, RouterOutlet, UserComponent, ProductComponent, HeaderComponent, ReactiveFormsModule, HttpClientModule, MatCardModule, ProductcardComponent, HomeComponent, ProductFormComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

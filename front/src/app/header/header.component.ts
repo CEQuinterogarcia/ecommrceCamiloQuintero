@@ -29,4 +29,8 @@ export class HeaderComponent {
   navigatecart() {
     this.router.navigate(['/cart']);
   }
+
+  navigateOrder(){
+    this.router.navigate(['/order']);
+  }
 }

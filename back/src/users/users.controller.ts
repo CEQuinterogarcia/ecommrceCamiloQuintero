@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UnauthorizedException, UsePipes, ValidationPipe  } from '@nestjs/common';
 import { UsersService } from './users.service';
-
+import { LoginDto } from './dto/login.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -23,9 +23,18 @@ export class UsersController {
     return await this.usersService.findUserById(id);
   }
 
-  @Get('email/:email')
-  async getUserByEmail(@Param('email') email: string): Promise<User> {
-    return await this.usersService.findUserByEmail(email);
+  @Post('login')
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+    const { email, password } = loginDto;
+    const user = await this.usersService.validateUser(email, password);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    // Genera y devuelve un token de JWT (o cualquier otro tipo de token)
+    const token = 'GENERATE_YOUR_TOKEN_HERE'; // Implementa tu lógica de generación de tokens aquí
+    return { token };
   }
 
   @Post()

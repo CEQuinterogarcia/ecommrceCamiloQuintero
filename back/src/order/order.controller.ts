@@ -24,16 +24,16 @@ export class OrderController {
     return await this.orderService.getOrders(userId);
   }
 
-  @Get(':userId/export-pdf')  // Define una ruta GET que acepta un 'userId' como parámetro de la URL
+  @Get(':orderId/export')  // Define una ruta GET que acepta un 'userId' como parámetro de la URL
   async exportOrdersToPdf(
-    @Param('userId') userId: number,  // Captura el 'userId' de la URL como parámetro
+    @Param('orderId') orderId: number,  // Captura el 'userId' de la URL como parámetro
     @Res() res: Response  // Utiliza la respuesta de Express para manipularla manualmente
   ) {
-    const pdfBuffer = await this.orderService.exportOrdersToPdf(userId);  // Llama al servicio para generar el PDF
+    const pdfBuffer = await this.orderService.exportOrdersToPdf(orderId);  // Llama al servicio para generar el PDF
 
     res.set({
       'Content-Type': 'application/pdf',  // Configura el tipo de contenido a 'application/pdf'
-      'Content-Disposition': `attachment; filename=orders_${userId}.pdf`,  // Especifica el nombre del archivo PDF
+      'Content-Disposition': `attachment; filename=orders_${orderId}.pdf`,  // Especifica el nombre del archivo PDF
       'Content-Length': pdfBuffer.length,  // Incluye la longitud del archivo PDF
     });
 

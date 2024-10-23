@@ -26,6 +26,14 @@ export class UsersService {
     return await this.usersRepository.findOne({ where: { email } });
   }
 
+  async validateUser(email: string, password: string): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { email } });
+    if (user && user.password === password) { // Deberías usar hashing de contraseñas en producción
+      return user;
+    }
+    return null;
+  }
+
   
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
