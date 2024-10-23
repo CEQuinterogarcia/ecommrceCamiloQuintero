@@ -1,4 +1,3 @@
-// app.config.ts
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { AppRoutes } from './app.routes';
@@ -12,6 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(AppRoutes), // Asegúrate de usar AppRoutes aquí
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(), provideAnimationsAsync()
+    provideHttpClient(),
   ]
+
 };

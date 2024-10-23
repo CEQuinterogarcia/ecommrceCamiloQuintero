@@ -13,6 +13,7 @@ import { HeaderComponent } from '../header/header.component';
 export class CartComponent implements OnInit {
   items: CartItem[] = [];
   total: number = 0;
+  userId: number | null = null;
 
   constructor(private cartService: CartService) {}
 
@@ -23,6 +24,13 @@ export class CartComponent implements OnInit {
       console.log(items);
       this.calculateTotal();
     });
+
+    // Recupera el userId de localStorage y verifica si no es null
+    const userIdStr = localStorage.getItem('userId');
+    if (userIdStr) {
+      this.userId = +userIdStr;
+    }
+
   }
 
   // Método para calcular el total
@@ -43,13 +51,24 @@ export class CartComponent implements OnInit {
   }
 
 
-  placeOrder(userId: number) {
-    this.cartService.createOrder(userId).subscribe(response => {
-      console.log('Pedido creado con éxito:', response);
-      this.clearCart(); // Limpiar el carrito después de realizar el pedido
-    }, error => {
-      console.error('Error al crear el pedido:', error);
-    });
+  placeOrder() {
+    if (this.userId !== null ) {
+     // console.log('enviar order for user:', this.userId);
+      if (this.total != 0) {
+        this.cartService.createOrder(this.userId).subscribe(
+          response => {
+            console.log('Pedido creado con éxito', response);
+            this.clearCart(); // Limpiar el carrito después de realizar el pedido
+          },
+          error => {
+            console.error('Error crear pedido', error);
+          }
+        );
+      }
+
+    } else {
+      console.error('User ID is null');
+    }
   }
 
 }

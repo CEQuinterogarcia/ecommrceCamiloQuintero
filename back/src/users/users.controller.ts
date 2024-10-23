@@ -25,7 +25,7 @@ export class UsersController {
 
   @Post('login')
   @UsePipes(new ValidationPipe({ transform: true }))
-  async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+  async login(@Body() loginDto: LoginDto): Promise<{ token: string, userId: number }> {
     const { email, password } = loginDto;
     const user = await this.usersService.validateUser(email, password);
     if (!user) {
@@ -34,7 +34,7 @@ export class UsersController {
 
     // Genera y devuelve un token de JWT (o cualquier otro tipo de token)
     const token = 'GENERATE_YOUR_TOKEN_HERE'; // Implementa tu lógica de generación de tokens aquí
-    return { token };
+    return { token, userId: user.id };
   }
 
   @Post()

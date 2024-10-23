@@ -13,16 +13,24 @@ import { HeaderComponent } from '../header/header.component';
 })
 export class OrderComponent implements OnInit {
   orders: any[] = [];
-  userId: number = 2; // Reemplaza esto con el ID del usuario real
+  userId: number = 0;
 
   constructor(private orderService: OrderService) {}
 
   ngOnInit() {
+    const userIdStr = localStorage.getItem('userId');
+    if (userIdStr) {
+      this.userId = +userIdStr;
+    }
+
     this.orderService.getOrder(this.userId).subscribe((data: any[]) => {
       this.orders = data;
       console.log(this.orders);
 
     });
+
+
+
   }
 
   printOrder(orderId: number) {

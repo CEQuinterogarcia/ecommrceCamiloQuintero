@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,7 @@ import {MatMenuModule} from '@angular/material/menu';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   navigateToAddProduct() {
     this.router.navigate(['/productform']);
@@ -22,8 +23,9 @@ export class HeaderComponent {
     this.router.navigate(['/home']);
   }
 
-  navigateDetail() {
-    this.router.navigate(['/detail']);
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   navigatecart() {

@@ -10,16 +10,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}login`, { username, password });
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}login`, { email, password });
   }
 
   logout() {
-    // Implementa la lógica de cierre de sesión aquí
+    localStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {
-    // Implementa la lógica para verificar si el usuario está autenticado
     return !!localStorage.getItem('token');
   }
 }

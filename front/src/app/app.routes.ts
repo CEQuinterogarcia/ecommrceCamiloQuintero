@@ -6,9 +6,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
 
-
 export const AppRoutes: Routes = [
-
   { path: 'home', component: HomeComponent },
   { path: 'productform', component: ProductFormComponent },
   { path: 'cart', component: CartComponent },
@@ -16,8 +14,6 @@ export const AppRoutes: Routes = [
   { path: 'detail', component: DetailComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home' }
-
 ];
 
